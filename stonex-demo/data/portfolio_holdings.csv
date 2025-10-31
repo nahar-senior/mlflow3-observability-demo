@@ -1,0 +1,18 @@
+client_id,account_number,ticker,asset_name,quantity,avg_cost,sector,asset_class
+C001,ACC-9876,AAPL,Apple Inc.,250,145.20,Technology,Equity
+C001,ACC-9876,MSFT,Microsoft Corp.,180,280.50,Technology,Equity
+C001,ACC-9876,JPM,JPMorgan Chase,120,155.80,Financials,Equity
+C001,ACC-9876,JNJ,Johnson & Johnson,100,165.40,Healthcare,Equity
+C001,ACC-9876,BND,Vanguard Total Bond,500,75.20,Fixed Income,Bond ETF
+C002,ACC-5432,NVDA,NVIDIA Corp.,75,420.30,Technology,Equity
+C002,ACC-5432,GOOGL,Alphabet Inc.,90,138.50,Technology,Equity
+C002,ACC-5432,V,Visa Inc.,110,245.60,Financials,Equity
+C002,ACC-5432,PG,Procter & Gamble,85,155.20,Consumer Staples,Equity
+C002,ACC-5432,AGG,iShares Core Bond,400,102.30,Fixed Income,Bond ETF
+C003,ACC-7891,TSLA,Tesla Inc.,45,235.80,Consumer Cyclical,Equity
+C003,ACC-7891,META,Meta Platforms,60,315.40,Technology,Equity
+C003,ACC-7891,XOM,Exxon Mobil,150,110.60,Energy,Equity
+C003,ACC-7891,UNH,UnitedHealth,55,485.20,Healthcare,Equity
+C003,ACC-7891,TLT,iShares 20+ Yr Bond,200,95.40,Fixed Income,Bond ETF
+
+

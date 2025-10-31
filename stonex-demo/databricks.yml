@@ -1,0 +1,31 @@
+bundle:
+  name: stonex_portfolio_demo
+
+# Commented out job resources since we're only deploying files, not running jobs
+# include:
+#   - resources/*.yml
+
+workspace:
+  root_path: ~/.bundle/${bundle.name}/${bundle.target}
+
+# Sync files to workspace
+sync:
+  include:
+    - "*.py"
+    - "data/*.csv"
+  exclude:
+    - "*.pyc"
+    - "__pycache__"
+
+targets:
+  dev:
+    mode: development
+    workspace:
+      host: <YOUR_DATABRICKS_WORKSPACE_URL>
+    
+  prod:
+    mode: production
+    workspace:
+      host: <YOUR_DATABRICKS_WORKSPACE_URL>
+      root_path: /Shared/.bundle/prod/${bundle.name}
+

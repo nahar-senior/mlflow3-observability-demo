@@ -1,0 +1,24 @@
+# StoneX Portfolio Intelligence Agent - Dependencies
+
+# MLflow with Databricks integration
+mlflow[databricks]>=2.16.0
+
+# Agent framework
+langgraph==0.2.34
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+
+# Databricks integrations
+databricks-langchain>=0.1.0
+databricks-vectorsearch>=0.40
+databricks-sdk>=0.30.0
+databricks-agents>=0.1.0
+
+# Python utilities
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Optional: For local testing
+python-dotenv>=1.0.0
+
+

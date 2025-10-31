@@ -11,6 +11,70 @@ A production-ready demonstration of MLflow 3.0's observability capabilities for 
 
 ## Architecture
 
+### Agent Design
+
+```
+┌─────────────────────────────────┐
+│   User Query                    │
+│   "Analyze C001's portfolio"    │
+└──────────────┬──────────────────┘
+               │
+               ▼
+  ┌───────────────────────────────────────────────────────┐
+  │         LangGraph Supervisor Agent                    │
+  │         LLM: Claude Sonnet 4                          │
+  │         (databricks-claude-3-7-sonnet)                │
+  └───────────────────────┬───────────────────────────────┘
+                          │
+       Orchestrates Tool Calls (Independent & Parallel)
+                          │
+┌──────────────┬──────────┴──────────┬──────────────┐
+│              │                     │              │
+▼              ▼                     ▼              ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│ get_         │ │ calculate_   │ │ get_market_  │ │ search_      │
+│ portfolio_   │ │ portfolio_   │ │ data()       │ │ earnings_    │
+│ summary()    │ │ risk()       │ │              │ │ reports()    │
+│              │ │              │ │              │ │              │
+│ UC Function  │ │ UC Function  │ │ UC Function  │ │ Vector Search│
+│              │ │              │ │              │ │ (RAG)        │
+└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘
+     │                 │                │                 │
+     └─────────────────┴────────────────┴─────────────────┘
+                            │
+                            ▼
+               ┌───────────────────────┐
+               │  Synthesized Response │
+               └───────────────────────┘
+```
+
+### MLflow 3.0 Observability Stack
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    AGENT EXECUTION                      │
+│  (Automatic tracing via mlflow.langchain.autolog())    │
+└────────────────────────┬────────────────────────────────┘
+                         │
+         ┌───────────────┼───────────────┐
+         ▼               ▼               ▼
+   ┌──────────┐   ┌──────────┐   ┌──────────┐
+   │ MLflow   │   │ LLM      │   │ SME      │
+   │ Tracing  │   │ Judges   │   │ Review   │
+   │          │   │          │   │ App      │
+   └──────────┘   └──────────┘   └──────────┘
+   │ Captures: │   │ Evaluates:│   │ Provides:│
+   │ • LLM     │   │ • Built-in│   │ • Expert │
+   │   calls   │   │   (2)     │   │   feedback│
+   │ • Tool    │   │ • Custom  │   │ • Custom │
+   │   calls   │   │   (6)     │   │   labels │
+   │ • Inputs/ │   │ • Hard    │   │ • Human  │
+   │   Outputs │   │   Reqs(3) │   │   validation│
+   │ • Latency │   │           │   │          │
+   │ • Tokens  │   │ Pass/Fail │   │ Ratings  │
+   └───────────┘   └───────────┘   └──────────┘
+```
+
 - **Agent Framework**: LangGraph with Claude Sonnet 4
 - **Tools**: 3 Unity Catalog Functions + 1 Vector Search index
 - **Use Case**: Wealth management portfolio analysis
